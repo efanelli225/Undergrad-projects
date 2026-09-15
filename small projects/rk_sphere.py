@@ -26,9 +26,9 @@ def RK(a, b, N, v0):
     h = (b-a)/N
     T = np.zeros(N+1)                       # time array
     V = np.zeros(N+1)                       # velocity array
-    T[0] = a                              # initial time
-    V[0] = v0                              # initial velocity
-    for i in range(0, N):
+    T[0] = a                                # initial time
+    V[0] = v0                               # initial velocity
+    for i in range(0, N):                   # apply R-K method
         t = T[i]
         v = V[i]
         k1 = h * F(t, v)
@@ -41,18 +41,21 @@ def RK(a, b, N, v0):
     
     
 # define domain
-a = 0                                       # start 
-b = 20                                      # end
-N = 100                                     # number of segments
-v0 = 0
+a = 0                                       # time start 
+b = 20                                      # time end
+N = 100                                     # number of steps
+v0 = 0                                      # initial velocity
 
+# determine if lin or quad term dominates
 if 1/(c2/c1*r*2) > 1:
     lin, quad = 1, 0
 else: 
     lin, quad = 0, 1
 
+# solve
 T, V = RK(a, b, N, v0)
 
+# plot
 fig1 = plt.figure()
 plt.plot(T, V)
 plt.xlabel("Time (s)")
