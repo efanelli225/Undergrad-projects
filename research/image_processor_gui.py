@@ -11,11 +11,12 @@ import numpy as np
 from PIL import Image
 from scipy.ndimage import gaussian_filter
 
-class FileDialogDemo(EasyFrame):
+class Image_Processor(EasyFrame):
     def __init__(self):
         """Sets up the window and widgets."""
-        EasyFrame.__init__(self, title="File Dialog Demo")
+        EasyFrame.__init__(self, title="Image Processor")
         self.addButton(text="Select Folder", row=0, column=0, command=self.selectFolder)
+        self.outputArea = self.addTextArea("", row=1, column=0, columnspan=2, width=60, height=10)
 
     def selectFolder(self):
         """Select a folder and process all images inside it."""
@@ -28,8 +29,11 @@ class FileDialogDemo(EasyFrame):
             print("No folder selected.")
 
     def processFolder(self, folder_path):
-        # output folder to save processed images
-        output_folder = 'C:/Users/evafa/OneDrive/Desktop/Research/processed_images/'
+        # Create output folder next to the input folder
+        parent_dir = os.path.dirname(folder_path)
+        input_name = os.path.basename(folder_path)
+        output_folder = os.path.join(parent_dir, f"{input_name}_processed")
+        output_folder = os.path.normpath(output_folder)
         os.makedirs(output_folder, exist_ok=True)
 
         i = 0                                                           # image counter
@@ -56,10 +60,19 @@ class FileDialogDemo(EasyFrame):
             img2.save(save_path)                                        # saves new image to output folder
                                         
             i += 1
-        print('Complete.')
+            # self.outputArea["state"] = "normal"
+            # current = self.outputArea.getText()
+            # self.outputArea.setText(current + f"Image {i} processed.")
+            # self.outputArea["state"] = "disabled"
+
+        self.outputArea["state"] = "normal"
+        current = self.outputArea.getText()
+        self.outputArea.setText(current + f"Image processing complete. View your processed images at: \n{output_folder}")
+        self.outputArea["state"] = "disabled"
         
 def main():
-    FileDialogDemo().mainloop()
+    Image_Processor().mainloop()
 
 if __name__ == "__main__":
     main()
+
