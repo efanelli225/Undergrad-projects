@@ -1,0 +1,11 @@
+how to make the .py into .exe:
+-> open cmd
+-> cd C:\Users\evafa\OneDrive\Desktop\Research
+-> pyinstaller --onefile -w --exclude-module PyQt6 --hidden-import breezypythongui --hidden-import scipy image_processor_gui.py
+-> pyinstaller --onefile -w --exclude-module PyQt6 --hidden-import scipy --add-data "breezypythongui.py;;." image_processor_gui.py
+
+
+how to access more environments and packages:
+-> best way is to add them to C:\Users\evafa\miniforge3\envs because Spyder checks this folder
+-> you can also add a new path to Spyder with Tools:PYTHONPATH Manager:"plus button" and select the new path 
+
