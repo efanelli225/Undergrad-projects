@@ -30,7 +30,7 @@ class Image_Processor(EasyFrame):
             self.processFolder(folder_path)
         else:
             self.outputArea["state"] = "normal"
-            self.outputArea.setText(f"No folder selected.")
+            self.outputArea.setText("No folder selected.")
             self.outputArea["state"] = "disabled"
 
     def processFolder(self, folder_path):
