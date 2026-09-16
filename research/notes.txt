@@ -2,7 +2,7 @@ how to make the .py into .exe:
 > conda create -n py312_test python=3.12 numpy scipy pillow pyinstaller
 > conda activate py312_test
 > cd C:\Users\evafa\Desktop\making_exe   
-> python -m PyInstaller --clean --onedir --collect-submodules scipy --hidden-import scipy._external.array_api_compat.numpy.fft image_processor_gui.py
+> python -m PyInstaller --clean --onedir -w --collect-submodules scipy --hidden-import scipy._external.array_api_compat.numpy.fft image_processor_gui.py
 > C:\Users\evafa\Desktop\making_exe\dist\image_processor_gui\image_processor_gui.exe
 
 
