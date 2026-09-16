@@ -15,7 +15,8 @@ class Image_Processor(EasyFrame):
     def __init__(self):
         """Sets up the window and widgets."""
         EasyFrame.__init__(self, title="Image Processor")
-        self.addButton(text="Select Folder", row=0, column=0, command=self.selectFolder)
+        self.label = self.addLabel(text="Please select the folder your images are located in.", row=0, column=0, columnspan=1, sticky="NSEW")
+        self.addButton(text="Select Folder", row=0, column=1, command=self.selectFolder)
         self.outputArea = self.addTextArea("", row=1, column=0, columnspan=2, width=60, height=10)
 
     def selectFolder(self):
@@ -23,10 +24,14 @@ class Image_Processor(EasyFrame):
         folder_path = tkinter.filedialog.askdirectory(parent=self)
 
         if folder_path:
-            print("Selected folder:", folder_path)
+            self.outputArea["state"] = "normal"
+            self.outputArea.setText(f"Selected folder: {folder_path}")
+            self.outputArea["state"] = "disabled"
             self.processFolder(folder_path)
         else:
-            print("No folder selected.")
+            self.outputArea["state"] = "normal"
+            self.outputArea.setText(f"No folder selected.")
+            self.outputArea["state"] = "disabled"
 
     def processFolder(self, folder_path):
         # Create output folder next to the input folder
@@ -52,18 +57,15 @@ class Image_Processor(EasyFrame):
             smooth = gaussian_filter(imgar, sigma=20)                   # smooths data
             smooth[smooth[:,:,0] > 100] = 255                           # white pixels
             smooth[smooth[:,:,0] < 100] = 0                             # black pixels
-            # optional plots image
-            # plt.imshow(imgar)
-            # plt.show()
             img2 = Image.fromarray(smooth)                              # converts array to pillow image object
             save_path = os.path.join(output_folder, f"Image_{i}.jpeg")  # new image path to be saved
             img2.save(save_path)                                        # saves new image to output folder
                                         
             i += 1
-            # self.outputArea["state"] = "normal"
-            # current = self.outputArea.getText()
-            # self.outputArea.setText(current + f"Image {i} processed.")
-            # self.outputArea["state"] = "disabled"
+            self.outputArea["state"] = "normal"
+            current = self.outputArea.getText()
+            self.outputArea.setText(current + f"Image {i} processed.")
+            self.outputArea["state"] = "disabled"
 
         self.outputArea["state"] = "normal"
         current = self.outputArea.getText()
