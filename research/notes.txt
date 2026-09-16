@@ -4,7 +4,7 @@ how to make the .py into .exe:
 -> cd C:\Users\evafa\OneDrive\Desktop\Research (wherever the .py file is)
 -> make sure breezypythongui is in the same location as .py file
 -> python -m PyInstaller --clean --onedir --collect-all scipy --collect-all numpy --collect-all PIL image_processor_gui.py
-
+python -m PyInstaller --clean --onedir --windowed --collect-all pillow --collect-all PIL --collect-all numpy --collect-all scipy image_processor_gui.py
 
 how to access more environments and packages:
 -> best way is to add them to C:\Users\evafa\miniforge3\envs because Spyder checks this folder
